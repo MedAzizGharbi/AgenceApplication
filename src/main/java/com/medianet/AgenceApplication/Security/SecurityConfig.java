@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/circuits/**").permitAll()
+                .requestMatchers("/api/circuits/create").hasRole("AGENCE")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
