@@ -9,7 +9,6 @@ import java.util.Date;
 public class CircuitDto {
     private Long id;
     private String nom;
-    private Agence agence;
     private String categorie;
     private Date date;
     private String destination;

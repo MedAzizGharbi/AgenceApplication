@@ -12,7 +12,6 @@ import java.util.List;
 public class AgenceDto {
     private Long id;
     private String nom;
-    private List<Circuit> circuitList;
     private String description;
     private String email;
 }

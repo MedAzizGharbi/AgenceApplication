@@ -11,16 +11,15 @@ public class Agence implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    private List<Circuit> circuitList;
+
     private String description;
     private String email;
 
     public Agence() {
     }
 
-    public Agence(String nom, List<Circuit> circuitList, String description, String email) {
+    public Agence(String nom, String description, String email) {
         this.nom = nom;
-        this.circuitList = circuitList;
         this.description = description;
         this.email = email;
     }
@@ -39,14 +38,6 @@ public class Agence implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public List<Circuit> getCircuitList() {
-        return circuitList;
-    }
-
-    public void setCircuitList(List<Circuit> circuitList) {
-        this.circuitList = circuitList;
     }
 
     public String getDescription() {

@@ -12,9 +12,6 @@ public class Circuit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    @ManyToOne
-    @JoinColumn(name = "id_agence")
-    private Agence agence;
     private String categorie;
     private Date date;
     private String destination;
@@ -24,9 +21,8 @@ public class Circuit implements Serializable {
 
     }
 
-    public Circuit(String nom, Agence agence, String categorie, Date date, String destination, int difficulte, String duree) {
+    public Circuit(String nom, String categorie, Date date, String destination, int difficulte, String duree) {
         this.nom = nom;
-        this.agence = agence;
         this.categorie = categorie;
         this.date = date;
         this.destination = destination;
@@ -48,14 +44,6 @@ public class Circuit implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Agence getAgence() {
-        return agence;
-    }
-
-    public void setAgence(Agence agence) {
-        this.agence = agence;
     }
 
     public String getCategorie() {
