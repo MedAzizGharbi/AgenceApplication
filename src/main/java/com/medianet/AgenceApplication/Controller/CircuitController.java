@@ -42,7 +42,7 @@ public class CircuitController {
 
         // Update the existing circuit with the new data
         existingCircuit.setNom(circuitDto.getNom());
-        existingCircuit.setCategorie(circuitDto.getCategorie());
+        existingCircuit.setCategories(circuitDto.getCategories());
         existingCircuit.setDate(circuitDto.getDate());
         existingCircuit.setDestination(circuitDto.getDestination());
         existingCircuit.setDifficulte(circuitDto.getDifficulte());
@@ -52,14 +52,5 @@ public class CircuitController {
         Circuit updatedCircuit = circuitRepository.save(existingCircuit);
 
         return ResponseEntity.ok(updatedCircuit);
-    }
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteCircuit(@PathVariable Long id){
-        Optional<Circuit> existingCircuit = circuitRepository.findById(id);
-        if(existingCircuit.isPresent()){
-            circuitRepository.delete(existingCircuit);
-            return ResponseEntity.noContent().build();
-        }
-        return null;
     }
 }

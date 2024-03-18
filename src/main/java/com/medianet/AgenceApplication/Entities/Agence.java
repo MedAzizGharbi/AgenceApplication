@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "agences")
 public class Agence implements Serializable {
@@ -14,8 +16,23 @@ public class Agence implements Serializable {
 
     private String description;
     private String email;
+    @ManyToMany
+    @JoinTable(
+            name = "agence_circuit",
+            joinColumns = @JoinColumn(name = "agence_id"),
+            inverseJoinColumns = @JoinColumn(name = "circuit_id")
+    )
+    private Set<Circuit> circuits;
 
     public Agence() {
+    }
+
+    public Set<Circuit> getCircuits() {
+        return circuits;
+    }
+
+    public void setCircuits(Set<Circuit> circuits) {
+        this.circuits = circuits;
     }
 
     public Agence(String nom, String description, String email) {
