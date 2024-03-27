@@ -11,7 +11,9 @@ public class Image {
     private String type;
     private String url;
     private Long taille;
-
+    @ManyToOne
+    @JoinColumn(name = "circuit_id")
+    private Circuit circuit;
     public Long getId() {
         return id;
     }
@@ -42,5 +44,13 @@ public class Image {
 
     public void setTaille(Long taille) {
         this.taille = taille;
+    }
+
+    public Circuit getCircuit() {
+        return circuit;
+    }
+
+    public void setCircuit(Circuit circuit) {
+        this.circuit = circuit;
     }
 }

@@ -15,6 +15,15 @@ public class Categorie {
     @ManyToMany(mappedBy = "categories")
     private Set<Circuit> circuits;
 
+    public Categorie() {
+    }
+
+    public Categorie(String nom, String description, Set<Circuit> circuits) {
+        this.nom = nom;
+        this.description = description;
+        this.circuits = circuits;
+    }
+
     public Long getId() {
         return id;
     }

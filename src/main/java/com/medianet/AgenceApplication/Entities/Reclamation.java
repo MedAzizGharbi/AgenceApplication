@@ -8,6 +8,9 @@ public class Reclamation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
     private String sujet;
     private String description;
 
@@ -34,5 +37,13 @@ public class Reclamation {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

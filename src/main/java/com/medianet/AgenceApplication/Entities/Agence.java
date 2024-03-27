@@ -8,14 +8,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "agences")
-public class Agence implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Agence extends User implements Serializable{
     private String nom;
-
     private String description;
     private String email;
+    private String specialite;
+    private String adresse;
     @ManyToMany
     @JoinTable(
             name = "agence_circuit",
@@ -40,15 +38,6 @@ public class Agence implements Serializable {
         this.description = description;
         this.email = email;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNom() {
         return nom;
     }
@@ -71,5 +60,21 @@ public class Agence implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 }

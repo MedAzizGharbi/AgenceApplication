@@ -1,6 +1,8 @@
 package com.medianet.AgenceApplication.Controller;
 
+import com.medianet.AgenceApplication.Entities.Categorie;
 import com.medianet.AgenceApplication.Entities.Circuit;
+import com.medianet.AgenceApplication.Exceptions.ResourceNotFoundException;
 import com.medianet.AgenceApplication.Repository.CircuitRepository;
 import com.medianet.AgenceApplication.dto.CircuitDto;
 import org.apache.coyote.Response;
@@ -14,6 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/circuits")
 public class CircuitController {
@@ -31,26 +34,48 @@ public class CircuitController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCircuit);
     }
     @PutMapping("update/{id}")
-    public ResponseEntity<Circuit> updateCircuit(@PathVariable Long id, @Valid @RequestBody CircuitDto circuitDto){
-        Circuit existingCircuit = null;
-        try {
-            existingCircuit = circuitRepository.findById(id)
-                    .orElseThrow(() -> new Exception("Circuit not found with id: " + id));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public ResponseEntity<Circuit> updateCircuit
+            (@PathVariable(value = "id") Long id_circuit, @Valid @RequestBody CircuitDto circuitDto)
+            throws ResourceNotFoundException{
+        Circuit circuit = circuitRepository.findById(id_circuit).orElseThrow
+                (() -> new ResourceNotFoundException("Pas de categorie avec cet id"));
+        // Update the existing circuit with the new data
+        if (circuitDto.getNom() != null) {
+            circuit.setNom(circuitDto.getNom());
         }
 
-        // Update the existing circuit with the new data
-        existingCircuit.setNom(circuitDto.getNom());
-        existingCircuit.setCategories(circuitDto.getCategories());
-        existingCircuit.setDate(circuitDto.getDate());
-        existingCircuit.setDestination(circuitDto.getDestination());
-        existingCircuit.setDifficulte(circuitDto.getDifficulte());
-        existingCircuit.setDuree(circuitDto.getDuree());
+        if (circuitDto.getCategories() != null) {
+            circuit.setCategories(circuitDto.getCategories());
+        }
+
+        if (circuitDto.getDate() != null) {
+            circuit.setDate(circuitDto.getDate());
+        }
+
+        if (circuitDto.getDestination() != null) {
+            circuit.setDestination(circuitDto.getDestination());
+        }
+
+        if (circuitDto.getDifficulte() != -1) {
+            circuit.setDifficulte(circuitDto.getDifficulte());
+        }
+
+        if (circuitDto.getDuree() != null) {
+            circuit.setDuree(circuitDto.getDuree());
+        }
 
         // Save the updated circuit
-        Circuit updatedCircuit = circuitRepository.save(existingCircuit);
+        Circuit updatedCircuit = circuitRepository.save(circuit);
 
         return ResponseEntity.ok(updatedCircuit);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCircuitById(@PathVariable(value = "id")Long id_circuit)
+        throws ResourceNotFoundException{
+        Circuit circuit = circuitRepository.findById(id_circuit).orElseThrow
+                (() -> new ResourceNotFoundException("Aucun circuit avec cet id" + id_circuit));
+        circuitRepository.delete(circuit);
+        return ResponseEntity.ok().body("Circuit Supprimer");
     }
 }
